@@ -1,12 +1,11 @@
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
 
-IHost host = Host.CreateDefaultBuilder(args)
-    .UseWindowsService()
-    .ConfigureServices(services =>
-    {
-        services.AddHostedService<DominatorAgent>();
-    })
-    .Build();
+var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseWindowsService();
 
-host.Run();
+var app = builder.Build();
+
+app.MapGet("/device", () => Results.Json(DeviceInfo.GetInfo()));
+
+app.Run();
