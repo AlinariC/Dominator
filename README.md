@@ -13,3 +13,10 @@ DominatorAgent is a lightweight Windows background service built with .NET 9. It
 An example `installer.nsi` script is provided for NSIS. After publishing the project, compile the installer script to create `DominatorAgentInstaller.exe`.
 
 The installer copies the service files to `Program Files` and registers the service to start automatically on boot.
+
+---
+
+## DominatorRelay
+
+DominatorRelay is a small Python Flask API that receives check-ins from Dominator agents.
+See the [DominatorRelay](./DominatorRelay/README.md) directory for details on running it.
