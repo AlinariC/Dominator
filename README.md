@@ -1,7 +1,9 @@
 # DominatorAgent
 
-DominatorAgent is a lightweight Windows background service built with .NET 9. It
-periodically reports basic system information to `https://example.com/checkin`.
+DominatorAgent is a lightweight Windows background service built with .NET 9.
+It exposes a small HTTP API on port `5000` that returns basic system
+information. Agents are meant to be reached directly over TailScale so no
+central relay server is required.
 
 ## Building
 
@@ -17,15 +19,18 @@ The installer copies the service files to `Program Files` and registers the serv
 
 ---
 
-## DominatorRelay
+## DominatorRelay (removed)
 
-DominatorRelay is a small Python Flask API that receives check-ins from Dominator agents.
-See the [DominatorRelay](./DominatorRelay/README.md) directory for details on running it.
+The old Python relay component has been removed. Agents now expose their own
+HTTP endpoint that the manager queries directly via TailScale.
 
 ---
 
 ## DominatorManager
 
-DominatorManager is a macOS SwiftUI app that lists all devices returned from `https://example.com/devices`.
-Open `DominatorManager/DominatorManager.xcodeproj` in Xcode and run the app.
-Use the **Refresh** button or pull to reload the device list.
+DominatorManager is a macOS SwiftUI app that lists devices by directly
+requesting each agent over TailScale. Set the environment variable
+`AGENT_HOSTS` to a comma separated list of agent URLs (for example
+`http://100.x.x.x:5000`). Open `DominatorManager/DominatorManager.xcodeproj`
+in Xcode and run the app. Use the **Refresh** button or pull to reload the
+device list.
